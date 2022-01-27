@@ -7,14 +7,15 @@ import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } fr
 
 const initialFormState = { name: '', description: ''};
 
-function App() {
+function App(props) {
   const [notes, setNotes] = useState([]);
   const [formData, setFormData] = useState(initialFormState);
 
   // Fetch notes once upon (first) mounting
   useEffect(() => {
+    console.log((props));
     fetchNotes();
-  }, []);
+  }, [props]);
 
   // Called when choose-image button returns changed file list
   // Note: automatically uploads selected image to database
@@ -88,6 +89,8 @@ function App() {
   return (
     <div className="App">
       <h1>My Notes App</h1>
+      {/* <h1>Welcome, {user}!</h1> */}
+
       <input
         onChange={e => setFormData({ ...formData, 'name': e.target.value })}
         placeholder="Note name"
@@ -106,13 +109,17 @@ function App() {
       <div style={{ marginBottom: 30 }}>
         {
           notes.map(note => (
-            <div key={note.id || note.name}>
+            <div key={note.id}>
+              <hr />
               <h2>{note.name}</h2>
               <p>{note.description}</p>
+              <div>
+                {
+                  note.image && <img src={note.image} style={{ width: 400 }} alt={"Note Pic"} />
+                }
+              </div>
               <button onClick={() => deleteNote(note)}>Delete note</button>
-              {
-                note.image && <img src={note.image} style={{ width: 400 }} alt={"Note Pic"} />
-              }
+
             </div>
           ))
         }
