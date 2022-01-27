@@ -21,7 +21,7 @@ function App() {
   async function onChange(e) {
     if (!e.target.files[0]) return
     const file = e.target.files[0];
-    console.log("File.name: ", file.name);
+    // console.log("File.name: ", file.name);
 
     // new note's note.image will get just the filename
     setFormData({ ...formData, image: file.name });
